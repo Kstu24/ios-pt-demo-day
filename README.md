@@ -16,11 +16,11 @@
 
 ## Links
 
-* Github Code: `<insert Github repository link here>`
-* Github Proposal: `<insert Proposal Pull Request here>`
-* Trello/Github Project Kanban: `<insert trello board here>`
+* Github Code: `https://github.com/jholowesko/LunchSelection`
+* Github Proposal: `https://github.com/Kstu24/ios-build-sprint-project-proposal`
+* Trello/Github Project Kanban: `https://github.com/jholowesko/Lunch-In/projects/2`
 * Test Flight Signup (Recommended): `<insert beta signup link here>`
-* YouTube demo video (Recommended): `<insert video url here>`
+* YouTube demo video (Recommended): `https://www.youtube.com/watch?v=JDAD1Af4Nvk&t=1s`
 
 ## Hero Image
 
@@ -30,27 +30,89 @@
 
 1. What was your favorite feature to implement? Why?
 
-    `<Your answer here>`
+`We took into account some helpful UI elements that changed the voted buttons from blue to green when voted or not voted. It makes it easier for the user to use and see which has been selected and which ones have not.`
 
 2. What was your #1 obstacle or bug that you fixed? How did you fix it?
 
-    `<Your answer here>`
+`Kevin- How to establish notifications. Watching a lot of demos and researching stack overflow. 
+john- Establishing multiples arrays that all saved to persistent store. Had to refactor a lot of code from the origional model to modify which array was being accessed from persistent store.`
   
 3. Share a chunk of code (or file) you're proud of and explain why.
 
-    `<Your answer here>`
+     Kevin - @IBAction func notificationTriggerTapped(_ sender: UIBarButtonItem) {
+           let mDepartmentWinner = winnerWinner(deparment: modelController.marketingDepartment)
+           let dDepartmentWinner = winnerWinner(deparment: modelController.designDepartment)
+           let fDepartmentWinner = winnerWinner(deparment: modelController.financeDepartment)
+           
+           let content = UNMutableNotificationContent()
+           content.badge = 1
+           content.body = """
+                           Marketing Department top choice: \(mDepartmentWinner)!
+                           Design Department top choice: \(dDepartmentWinner)!
+                           Finance Department top choice: \(fDepartmentWinner)!
+                           """
+           content.subtitle = "The votes have been casted."
+           content.title = "TIMES UP!"
+            
+           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            
+           //creating the request
+           let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
+           UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+           
+    Figured out how to set a notification on my own!
+        
+    John - func toggleDepartmentRestaurant(array: OfficeDepartment, positionInArray: Int) {
+    let departmentNumber = array.departmentNumber
+    switch departmentNumber {
+    case 1:
+        if array.restaurantArray[positionInArray].didSelfVote == true {
+            marketingDepartment.restaurantArray[positionInArray].numberOfVotes -= 1
+            marketingDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        } else {
+            marketingDepartment.restaurantArray[positionInArray].numberOfVotes += 1
+            marketingDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        }
+    case 2:
+        if array.restaurantArray[positionInArray].didSelfVote == true {
+            designDepartment.restaurantArray[positionInArray].numberOfVotes -= 1
+            designDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        } else {
+            designDepartment.restaurantArray[positionInArray].numberOfVotes += 1
+            designDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        }
+    case 3:
+        if array.restaurantArray[positionInArray].didSelfVote == true {
+            financeDepartment.restaurantArray[positionInArray].numberOfVotes -= 1
+            financeDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        } else {
+            financeDepartment.restaurantArray[positionInArray].numberOfVotes += 1
+            financeDepartment.restaurantArray[positionInArray].didSelfVote.toggle()
+        }
+    default:
+        print("No Matched Departments")
+        return
+    }
+    print("Toggled item in corresponding department")
+    
+    Had to figure out which array was being called and have them all act independently with sharing similar data.
+    
+    
+    
+    
+    Also using SF symbols because they are new and haven't been used frequently. Replaced some stock symbols with some new moderne symbols. 
   
 4. What is your elevator pitch? (30 second description your Grandma or a 5-year old would understand)
 
-    `<Your answer here>`
+`You can have your work lunch orgainized by voting on a place to meet.`
   
 5. What is your #1 feature?
 
-    `<Your answer here>`
+`All the arrays work seperatley and independently even though they all share the same data.`
   
 6. What are you future goals?
 
-    `<Your answer here>`
+    `Incorporate Icloud networking!`
 
 ## Required Slides (Add your Keynote to your PR)
 
